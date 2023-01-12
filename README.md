@@ -1,3 +1,5 @@
+55/94 Completed - 12/01/2023
+
 # Exercise to Book Chapter mapping
 
 | Exercise               | Book Chapter        |
