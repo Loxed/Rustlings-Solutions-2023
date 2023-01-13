@@ -13,6 +13,18 @@ pub fn factorial(num: u64) -> u64 {
     // For an extra challenge, don't use:
     // - recursion
     // Execute `rustlings hint iterators4` for hints.
+
+    let mut result = 1;
+
+    //for each, may be too imperative
+    // (1..=num).for_each(|x| result *= x)
+    // result
+
+    //range expression
+    // (1..=num).fold(1, |acc, x| acc * x)
+
+    //iterator expression
+    (1..=num).product()
 }
 
 #[cfg(test)]
