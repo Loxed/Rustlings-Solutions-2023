@@ -1,8 +1,6 @@
 // iterators4.rs
 // Execute `rustlings hint iterators4` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 pub fn factorial(num: u64) -> u64 {
     // Complete this function to return the factorial of num
     // Do not use:
@@ -14,8 +12,8 @@ pub fn factorial(num: u64) -> u64 {
     // - recursion
     // Execute `rustlings hint iterators4` for hints.
 
-    let mut result = 1;
-
+    //solution 1
+    //let mut result :i32 = 1;
     //for each, may be too imperative
     // (1..=num).for_each(|x| result *= x)
     // result
