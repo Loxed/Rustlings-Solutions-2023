@@ -3,9 +3,12 @@
 // Building on the last exercise, we want all of the threads to complete their work but this time
 // the spawned threads need to be in charge of updating a shared value: JobStatus.jobs_completed
 
-// I AM NOT DONE
+//Mutex is a mutual exclusion primitive useful for protecting shared data
+//https://doc.rust-lang.org/std/sync/struct.Mutex.html
 
-use std::sync::Arc;
+//it prevents multiple threads from accessing the same data at the same time
+
+use std::sync::{Arc,Mutex};
 use std::thread;
 use std::time::Duration;
 
@@ -14,14 +17,22 @@ struct JobStatus {
 }
 
 fn main() {
-    let status = Arc::new(JobStatus { jobs_completed: 0 });
+    let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));
     let mut handles = vec![];
+
     for _ in 0..10 {
         let status_shared = Arc::clone(&status);
         let handle = thread::spawn(move || {
             thread::sleep(Duration::from_millis(250));
             // TODO: You must take an action before you update a shared value
-            status_shared.jobs_completed += 1;
+
+            //you must attempt to lock the mutex before you can access the data inside it
+            let mut num = status_shared.lock().unwrap();
+            num.jobs_completed += 1;
+
+            //when you're done with the mutex, you must unlock it
+            //this is done automatically when the lock goes out of scope
+            //drop(num);
         });
         handles.push(handle);
     }
@@ -29,6 +40,6 @@ fn main() {
         handle.join().unwrap();
         // TODO: Print the value of the JobStatus.jobs_completed. Did you notice anything
         // interesting in the output? Do you have to 'join' on all the handles?
-        println!("jobs completed {}", ???);
+        println!("jobs completed {}", status.lock().unwrap().jobs_completed);
     }
 }
